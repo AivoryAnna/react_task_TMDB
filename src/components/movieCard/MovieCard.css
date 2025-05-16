@@ -1,0 +1,44 @@
+.movie-card {
+    width: 200px;
+    overflow: hidden;
+    margin: 10px;
+    position: relative;
+    background: var(--main-color);
+    color: var(--text-color);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  
+  .poster {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+  }
+  
+  .info {
+    padding: 10px;
+  }
+  
+  .info h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+  }
+
+  .info h3:hover {
+    color: var(--accent-color);; 
+  }
+  
+  .info p {
+    font-size: 0.875rem;
+    color: #666;
+    color: var(--text-color-light);
+  }
+  
+  .rating {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+  }
+  
