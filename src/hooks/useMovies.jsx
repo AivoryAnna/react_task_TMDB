@@ -1,35 +1,62 @@
-import { useEffect, useState, useCallback } from "react";
-import { fetchMovies } from "../api";
+import { useEffect, useState, useCallback, useMemo } from "react";
+import { fetchMovies } from "../services/api";
+import { removeDuplicates } from "./removeDuplicates";
 
-// This custom hook for fetching movies by genre
 
-export default function useMovies(genreId) {
-    const [movies, setMovies] = useState([]);
-    const [page, setPage] = useState(1);
-    const [hasMore, setHasMore] = useState(true);
 
-    // Stable function to load more movies when page or genreId changes
-    const loadMore = useCallback(async () => {
-        const newMovies = await fetchMovies(page, genreId);
-        if (newMovies.length === 0) {
-            setHasMore(false);
-        } else {
-            // I use spread operator to append new movies to the existing list
-            setMovies((prev) => [...prev, ...newMovies]);
-            setPage((prev) => prev + 1);
-        }
-    }, [page, genreId]);
+export default function useMovies(genreIds) {
+  const [movies, setMovies] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-    // Reset movie list when genre changes
-    useEffect(() => {
-        setMovies([]);
-        setPage(1);
-        setHasMore(true);
-    }, [genreId]);
-    // Load movies when page or genre changes
-    useEffect(() => {
-        loadMore();
-    }, [page, genreId, loadMore]);
+  const genreKey = useMemo(() => genreIds.slice().sort().join(","), [genreIds]);
 
-    return { movies, loadMore, hasMore };
+  useEffect(() => {
+    const loadFirstPage = async () => {
+      setLoading(true);
+      try {
+        const newMovies = await fetchMovies(1, genreIds);
+        setMovies(newMovies);
+        setPage(2);
+        setHasMore(newMovies.length > 0);
+      } catch (error) {
+        console.error("Error loading movies:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadFirstPage();
+  }, [genreKey]);
+
+  const loadMore = useCallback(async () => {
+    if (loading || !hasMore) return;
+  
+    setLoading(true);
+    try {
+      const newMovies = await fetchMovies(page, genreIds);
+  
+      if (newMovies.length === 0) {
+        setHasMore(false);
+      } else {
+        setMovies((prev) => {
+          // Remove duplicates due to unstable sorting
+          const unique = removeDuplicates(prev, newMovies);
+          return [...prev, ...unique];
+        });
+  
+        setPage((prev) => prev + 1);
+      }
+    } catch (error) {
+      console.error("Error loading more movies:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [loading, hasMore, page, genreKey]);
+  
+
+  return { movies, loadMore, hasMore, loading };
 }
+
+

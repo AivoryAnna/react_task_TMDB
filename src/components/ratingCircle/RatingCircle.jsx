@@ -8,8 +8,8 @@ const getCircleColor = (rating) => {
 };
 
 const RatingCircle = ({ value }) => {
-    const radius = 18;
-    const stroke = 4;
+    const radius = 15;
+    const stroke = 2;
     const circumference = 2 * Math.PI * radius;
     // This hides the part of the circle that doesn't belong to the rating
     const strokeDashoffset = circumference * (1 - value / 100);
@@ -17,7 +17,7 @@ const RatingCircle = ({ value }) => {
     return (
         <div className="rating-circle">
 
-            <svg height="40" width="40">
+            <svg height="35" width="35">
                 <circle
                     stroke="#666666"
                     fill="transparent"

@@ -1,0 +1,23 @@
+.navbar {
+    position: fixed;
+    background-color:var(--navbar-bg);
+    overflow: hidden;
+    top: 0;
+    left:0;
+    width: 99.5%;
+    height: 4rem;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar h3 {
+    font-size: 1.5rem;
+    color: var(--main-color);
+    transition: color 0.3s ease;
+  }
+
+  .navbar h3:hover {
+    color: var(--accent-color);; 
+  }

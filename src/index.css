@@ -1,21 +1,28 @@
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-main: 'Source Sans Pro', system-ui, Helvetica, Arial, sans-serif;
+  font-family: var(--font-main);
   line-height: 1.5;
   font-weight: 400;
   color: #000000;
   background-color: #ffffff;
-
+  overflow-x: hidden;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
+  --maxPrimaryPageWidth: 1440px;
+  --discoverColumnPadding: 24px;
+  --numberOfDiscoverColumns: 5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   --main-color: #ffffff;
   --accent-color: #00b4e4;
   --text-color: #000000;
-  --text-color-light: #6a6a6a;
+  --text-color-light: #767676;
+  --bg-button-light: #ececec;
   --rating-bg: #081c22;
+  --navbar-bg: #032541;
   --radius: 12px;
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
 }
 
 body {
@@ -24,6 +31,12 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: hidden;
+  font-family: var(--font-main);
+  h1, h2, h3, h4 {
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
 }
 
 

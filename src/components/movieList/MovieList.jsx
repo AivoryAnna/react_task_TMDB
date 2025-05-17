@@ -1,31 +1,33 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { GenreContext } from '../../context/GenreContext';
+import useMovies from '../../hooks/useMovies';
+import MovieCard from '../movieCard/MovieCard';
 import './MovieList.css';
-import MovieCard from '../MovieCard/MovieCard';
-
-const dummy = [
-    {
-        title: "Warfare",
-        poster_path: "/path1.jpg",
-        release_date: "2025-04-17",
-        vote_average: 7.2
-    },
-    {
-        title: "A Minecraft Movie",
-        poster_path: "/path2.jpg",
-        release_date: "2025-04-03",
-        vote_average: 6.4
-    },
-];
-
+import Button from '../../UI/button/Button';
+import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 
 const MovieList = () => {
-    return (
-        <div className="movie-list">
-            {dummy.map((movie, index) => (
-                <MovieCard key={index} movie={movie} />
-            ))}
-        </div>
-    );
+  const { appliedGenres } = useContext(GenreContext);
+  const { movies, loadMore, hasMore, loading } = useMovies(appliedGenres);
+  const [infiniteScrollEnabled, setInfiniteScrollEnabled] = useState(false);
+  const observerRef = useInfiniteScroll({ callback: loadMore, enabled: infiniteScrollEnabled, hasMore });
+
+  return (
+    <div className="movie-list">
+      {movies.map((movie) => (
+        <MovieCard key={movie.id} movie={movie} />
+      ))}
+
+      {!loading && hasMore && (
+        <Button onClick={() => {loadMore(); setInfiniteScrollEnabled(true);}} variant="active" className="load-more-button">
+          Load More
+        </Button>
+      )}
+
+      {hasMore && infiniteScrollEnabled && <div ref={observerRef} style={{ height: 20 }} />}
+    </div>
+  );
 };
+
 
 export default MovieList;

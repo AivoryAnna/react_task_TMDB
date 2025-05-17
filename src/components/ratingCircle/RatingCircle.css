@@ -1,24 +1,32 @@
 .rating-circle {
-    position: absolute;
-    bottom: 8px;
-    left: 8px;
-    width: 40px;
-    height: 40px;
-    background-color: #081c22;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+  position: relative;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: var(--rating-bg);
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+  margin-top: -1.25rem;
+  transform: translateX(0.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+
+  .rating-circle svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
   }
   
   .rating-text {
-    position: absolute;
     font-size: 0.75rem;
-    font-weight: bold;
-    color: white;
-    line-height: 1;
-    pointer-events: none;
+  font-weight: bold;
+  color: white;
+  z-index: 2;
+  pointer-events: none;
   }
   
   .rating-text span {
@@ -30,3 +38,7 @@
     vertical-align: super;
   }
   
+  .rating-text sup {
+    font-size: 0.5em;
+    vertical-align: super;
+  }
