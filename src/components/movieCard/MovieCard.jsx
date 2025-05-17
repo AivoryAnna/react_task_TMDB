@@ -2,6 +2,12 @@ import React from 'react';
 import './MovieCard.css';
 import RatingCircle from '../ratingCircle/RatingCircle';
 
+const formatDate = (dateStr) => {
+  if (!dateStr) return '';
+  const date = new Date(dateStr);
+  return new Intl.DateTimeFormat('en-GB', {day: '2-digit', month: 'short', year: 'numeric',}).format(date);
+};
+
 const IMG_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
 const MovieCard = ({ movie }) => {
@@ -20,9 +26,9 @@ const MovieCard = ({ movie }) => {
 
       <div className="info">
         <h3>{title}</h3>
-        <p>{release_date}</p>
+        <p>{formatDate(release_date)}</p>
       </div>
-   
+
     </div>
   );
 };
