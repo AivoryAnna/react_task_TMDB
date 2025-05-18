@@ -57,11 +57,9 @@ const Sidebar = ({ isLoadMoreVisible, applied, setApplied }) => {
       </Button>
 
       {selectedGenres.length > 0 && !genresAreEqual && !isButtonVisible && !isLoadMoreVisible && !applied && (
-        <div className="sticky-search">
           <Button onClick={applyFilters} variant="active" className="sticky-button">
             Search
           </Button>
-        </div>
       )}
     </div>
   );

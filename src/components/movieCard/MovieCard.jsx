@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './MovieCard.css';
 import RatingCircle from '../ratingCircle/RatingCircle';
 
@@ -17,12 +17,13 @@ const IMG_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 const MovieCard = ({ movie }) => {
   const { title, poster_path, release_date, vote_average } = movie;
   const rating = Math.round(vote_average * 10);
+  const [imageError, setImageError] = useState(false);
 
   return (
     <div className="movie-card">
-      {poster_path ?
+      {poster_path && !imageError ?
         (
-          <img className="poster" src={IMG_BASE_URL + poster_path} alt={title} />)
+          <img className="poster" src={IMG_BASE_URL + poster_path} alt={title} onError={() => setImageError(true)} />)
         :
         (
           <div className="poster placeholder">No Image</div>
