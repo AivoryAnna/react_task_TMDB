@@ -26,14 +26,31 @@
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
 }
 
+@media (max-width: 1200px) {
+  :root {
+    --numberOfDiscoverColumns: 3;
+  }
+}
+
+@media (max-width: 900px) {
+  :root {
+    --numberOfDiscoverColumns: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --numberOfDiscoverColumns: 1;
+  }
+}
+
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
   overflow-x: hidden;
   font-family: var(--font-main);
+  display: block;
   h1, h2, h3, h4 {
   font-weight: 600;
   letter-spacing: -0.2px;

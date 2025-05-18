@@ -1,13 +1,11 @@
 .movie-page-layout {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: var(--discoverColumnPadding);
-    max-width: var(--maxPrimaryPageWidth);
-    padding: 0 2rem;
-    align-items: start;
-    height: 100vh;
-    overflow-y: auto;
-    overflow-x: hidden;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: var(--discoverColumnPadding);
+  max-width: var(--maxPrimaryPageWidth);
+  margin: 0 auto;
+  padding: 0 2rem;
+  align-items: start;
   }
   
 
