@@ -9,6 +9,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 100%;
+  
 }
   
   .poster {
@@ -27,6 +29,11 @@
     font-size: 0.875rem;
     font-weight: 600;
     text-align: center;
+    aspect-ratio: 2 / 3; 
+    margin-bottom: 0.6rem;
+    height: auto;
+    object-fit: cover;
+    
   }
   
   .info {
@@ -37,6 +44,7 @@
     align-items: start;
     overflow: hidden;
     min-height: 5rem;
+    flex-grow: 1;
   }
   
   .info h3 {
@@ -49,9 +57,9 @@
     font-weight: 800;
     line-height: 1;
     text-overflow: ellipsis;
-    -webkit-line-clamp: 3; 
+    -webkit-line-clamp: 4; 
     -webkit-box-orient: vertical;
-    max-height: 2.7em;
+    max-height: 4em;
   }
 
   .info h3:hover {

@@ -9,6 +9,7 @@ export default function useMovies(genreIds) {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const genreKey = useMemo(() => genreIds.slice().sort().join(","), [genreIds]);
 
@@ -22,41 +23,43 @@ export default function useMovies(genreIds) {
         setHasMore(newMovies.length > 0);
       } catch (error) {
         console.error("Error loading movies:", error);
+        setError("Failed to load movies. Please try again later.");
       } finally {
         setLoading(false);
       }
     };
 
     loadFirstPage();
-  }, [genreKey]);
+  }, [genreKey, genreIds]);
 
   const loadMore = useCallback(async () => {
     if (loading || !hasMore) return;
-  
+
     setLoading(true);
     try {
       const newMovies = await fetchMovies(page, genreIds);
-  
+
       if (newMovies.length === 0) {
         setHasMore(false);
       } else {
         setMovies((prev) => {
-          // Remove duplicates due to unstable sorting
+          // I remove duplicates due to unstable sorting
           const unique = removeDuplicates(prev, newMovies);
           return [...prev, ...unique];
         });
-  
+
         setPage((prev) => prev + 1);
       }
     } catch (error) {
-      console.error("Error loading more movies:", error);
+      console.error("Error loading movies:", error);
+      setError("Failed to load movies. Please try again later.");
     } finally {
       setLoading(false);
     }
-  }, [loading, hasMore, page, genreKey]);
-  
+  }, [loading, hasMore, page, genreIds]);
 
-  return { movies, loadMore, hasMore, loading };
+
+  return { movies, loadMore, hasMore, loading, error };
 }
 
 

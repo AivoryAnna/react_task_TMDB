@@ -74,6 +74,14 @@
     z-index: 999;
     padding: 1rem;
   }
+
+  .movie-page {
+    position: absolute;
+    top: 50%;
+    color: var(--text-color);
+    font-size: 1.6rem;
+    font-weight: 500;
+  }
   
 
 

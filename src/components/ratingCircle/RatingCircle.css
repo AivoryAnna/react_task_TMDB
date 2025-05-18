@@ -5,7 +5,7 @@
   background-color: var(--rating-bg);
   border-radius: 50%;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
-  margin-top: -1.25rem;
+  margin-top: -1.5rem;
   transform: translateX(0.5rem);
   display: flex;
   align-items: center;
