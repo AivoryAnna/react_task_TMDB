@@ -33,8 +33,8 @@ const MainLayout = () => {
         <MovieList movies={movies} loadMore={loadMore} hasMore={hasMore} infiniteScrollEnabled={infiniteScrollEnabled} />
 
         {!loading && hasMore && movies.length >= 18 && (
-          <div className='load-more' ref={loadMoreRef}>
-            <Button  onClick={() => { loadMore(); setInfiniteScrollEnabled(true); }} variant="active"  className="load-more-button">
+          <div onClick={() => { loadMore(); setInfiniteScrollEnabled(true); }}  className='load-more' ref={loadMoreRef}>
+            <Button  variant="active"  className="load-more-button">
               Load More
             </Button>
           </div>

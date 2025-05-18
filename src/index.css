@@ -16,6 +16,7 @@
   -moz-osx-font-smoothing: grayscale;
   --main-color: #ffffff;
   --accent-color: #00b4e4;
+  --accent-color-transparent: rgba(0, 180, 228, 0.6);
   --text-color: #000000;
   --text-color-light: #767676;
   --bg-button-light: #ececec;
