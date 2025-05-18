@@ -10,12 +10,14 @@ const MovieList = ({ movies, loadMore, hasMore, infiniteScrollEnabled }) => {
       loadMore();
     }
   }, { enabled: infiniteScrollEnabled && hasMore, threshold: 0.2 });
-  
+
 
   return (
     <div className="movie-list">
       {movies.map((movie) => (
-        <MovieCard key={movie.id} movie={movie} />
+        <div className="movie-card">
+          <MovieCard key={movie.id} movie={movie} />
+        </div>
       ))}
 
       {hasMore && infiniteScrollEnabled && <div ref={observerRef} style={{ height: 20 }} />}

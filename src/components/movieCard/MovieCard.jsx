@@ -25,7 +25,7 @@ const MovieCard = ({ movie }) => {
           <img className="poster" src={IMG_BASE_URL + poster_path} alt={title} />)
         :
         (
-          <div className="poster placeholder">No Image</div>
+          <div className="placeholder">No Image</div>
         )}
 
       <div className="rating">
