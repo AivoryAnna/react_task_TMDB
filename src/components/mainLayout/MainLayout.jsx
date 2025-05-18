@@ -4,7 +4,6 @@ import './MainLayout.css';
 import Sidebar from '../sidebar/Sidebar';
 import useMovies from '../../hooks/useMovies';
 import { GenreContext } from '../../context/GenreContext';
-import Button from '../../UI/button/Button';
 import useVisibilityObserver from '../../hooks/useVisibilityObserver';
 
 const MainLayout = () => {
@@ -17,8 +16,11 @@ const MainLayout = () => {
 
 
   useEffect(() => {
-    if (applied && topRef.current) {
-      topRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (applied) {
+      setInfiniteScrollEnabled(false);
+      if (topRef.current) {
+        topRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   }, [applied]);
 
@@ -26,20 +28,22 @@ const MainLayout = () => {
     <div className="movie-page-layout">
 
       <aside className="sidebar">
-        <Sidebar isLoadMoreVisible={isLoadMoreVisible} applied={applied} setApplied={setApplied}/>
+        <Sidebar isLoadMoreVisible={isLoadMoreVisible} applied={applied} setApplied={setApplied} />
       </aside>
 
-      <main className="movies" ref={topRef}>
-        <MovieList movies={movies} loadMore={loadMore} hasMore={hasMore} infiniteScrollEnabled={infiniteScrollEnabled} />
+      {movies.length > 0 ? ( <main className="movies" ref={topRef}>
+          <MovieList movies={movies} loadMore={loadMore} hasMore={hasMore} infiniteScrollEnabled={infiniteScrollEnabled} />
 
         {!loading && hasMore && movies.length >= 18 && (
-          <div onClick={() => { loadMore(); setInfiniteScrollEnabled(true); }}  className='load-more' ref={loadMoreRef}>
-            <Button  variant="active"  className="load-more-button">
-              Load More
-            </Button>
+          <div onClick={() => { loadMore(); setInfiniteScrollEnabled(true); }} className='load-more' ref={loadMoreRef}>
+            Load More
           </div>
         )}
-      </main>
+      </main>) : (
+        <div className="no-movies">
+          <p>No movies found</p>
+        </div>
+      )}
     </div>
   );
 };

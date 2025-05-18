@@ -5,12 +5,7 @@
   max-width: calc((var(--maxPrimaryPageWidth) - 80px - 280px - (var(--discoverColumnPadding) * var(--numberOfDiscoverColumns))) / var(--numberOfDiscoverColumns));
   overflow: hidden;
   position: relative;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background: var(--main-color);
   color: var(--text-color);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

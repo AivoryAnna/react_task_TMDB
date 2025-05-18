@@ -15,7 +15,7 @@ const MovieList = ({ movies, loadMore, hasMore, infiniteScrollEnabled }) => {
   return (
     <div className="movie-list">
       {movies.map((movie) => (
-        <div className="movie-card">
+        <div className='card'>
           <MovieCard key={movie.id} movie={movie} />
         </div>
       ))}

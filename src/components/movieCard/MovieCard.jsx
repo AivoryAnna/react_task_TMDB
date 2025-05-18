@@ -33,7 +33,7 @@ const MovieCard = ({ movie }) => {
       </div>
 
       <div className="info">
-      <h3>{title.length > 40 ? title.slice(0, 40) + '...' : title}</h3>
+      <h3>{title}</h3>
         <p>{formatDate(release_date)}</p>
       </div>
     </div>
