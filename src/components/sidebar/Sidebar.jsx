@@ -3,34 +3,53 @@ import { fetchGenres } from "../../services/api";
 import { GenreContext } from "../../context/GenreContext";
 import Button from "../../UI/button/Button";
 import "./Sidebar.css";
-import clsx from 'clsx';
+import clsx from "clsx";
 import useVisibilityObserver from "../../hooks/useVisibilityObserver";
 
 const Sidebar = ({ isLoadMoreVisible, applied, setApplied }) => {
   const [genres, setGenres] = useState([]);
-  const [click, setIsClick] = useState(false);
+  const [hoveringId, setHoveringId] = useState(null);
+  const [justUnselected, setJustUnselected] = useState({});
   const { selectedGenres, setSelectedGenres, setAppliedGenres } = useContext(GenreContext);
   const [buttonRef, isButtonVisible] = useVisibilityObserver(null, { threshold: 1 });
-
-
-  // useEffect runs once, because the dependency array is empty - the thing I blanked on during the interview
 
   useEffect(() => {
     fetchGenres().then(setGenres);
   }, []);
 
   const toggleGenre = (id) => {
+    const wasSelected = selectedGenres.includes(id);
+
     setSelectedGenres((prev) =>
-      prev.includes(id) ? prev.filter((g) => g !== id) : [...prev, id]
+      wasSelected ? prev.filter((g) => g !== id) : [...prev, id]
     );
-    setIsClick(true);
+
+    if (wasSelected) {
+      setJustUnselected((prev) => ({ ...prev, [id]: true }));
+    }
+
     setApplied(false);
   };
+
+  useEffect(() => {
+    const timers = Object.entries(justUnselected).map(([id]) => {
+      return setTimeout(() => {
+        setJustUnselected((prev) => {
+          const updated = { ...prev };
+          delete updated[id];
+          return updated;
+        });
+      }, 2000);
+    });
+
+    return () => {
+      timers.forEach(clearTimeout);
+    };
+  }, [Object.keys(justUnselected).join(",")]);
 
   const applyFilters = () => {
     setAppliedGenres([...selectedGenres]);
     setApplied(true);
-    setIsClick(false);
   };
 
   return (
@@ -38,18 +57,21 @@ const Sidebar = ({ isLoadMoreVisible, applied, setApplied }) => {
       <h3>Popular Movies</h3>
       <div className="genre-buttons">
         {genres.map((genre) => {
+          ///Incorrect behavior between the selected state and hover on the original site, so I implemented it differently
           const selected = selectedGenres.includes(genre.id);
           return (
-            <Button key={genre.id} onClick={() => toggleGenre(genre.id)} variant={selected ? "active" : "default"} className='genre-button'>
+            <Button key={genre.id} onMouseEnter={() => setHoveringId(genre.id)} onMouseLeave={() => setHoveringId(null)} onClick={() => toggleGenre(genre.id)} variant={selected ? "active" : "default"} 
+            className={clsx("genre-button", justUnselected[genre.id] && "just-unselected", hoveringId === genre.id && "genre-button-hover")}>
               {genre.name}
             </Button>
           );
         })}
       </div>
 
-      <Button ref={buttonRef} onClick={applyFilters} variant={selectedGenres.length > 0 || click ? "active" : "primary"} className={clsx('search-button', { ready: selectedGenres.length > 0 || click })}>
+      <Button ref={buttonRef} onClick={applyFilters} variant={selectedGenres.length > 0 ? "active" : "primary"} className={clsx("search-button", { ready: selectedGenres.length > 0 })}>
         Search
       </Button>
+
       {selectedGenres.length > 0 && !isButtonVisible && !isLoadMoreVisible && !applied && (
         <div className="sticky-search">
           <Button onClick={applyFilters} variant="active" className="sticky-button">
@@ -57,11 +79,11 @@ const Sidebar = ({ isLoadMoreVisible, applied, setApplied }) => {
           </Button>
         </div>
       )}
-
     </div>
   );
 };
 
 export default Sidebar;
+
 
 

@@ -1,3 +1,5 @@
+///On the original site, there's a bug with fluctuating card sizes. Here, I tried to add fixed dimensions.
+
 .movie-card {
     width: 100%;
     max-width: calc((var(--maxPrimaryPageWidth) - 80px - 280px - (var(--discoverColumnPadding) * var(--numberOfDiscoverColumns))) / var(--numberOfDiscoverColumns));
@@ -20,15 +22,26 @@
     aspect-ratio: 2 / 3;
     object-fit: cover;
   }
+
+  .poster.placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e0e0e0;
+    color: #666;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-align: center;
+  }
   
   .info {
     padding: 0.5rem;
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: start;
     align-items: start;
     overflow: hidden;
-    height: 3em; 
+    min-height: 4.3rem;
   }
   
   .info h3 {
@@ -43,6 +56,7 @@
     text-overflow: ellipsis;
     -webkit-line-clamp: 3; 
     -webkit-box-orient: vertical;
+    max-height: 2.7em;
   }
 
   .info h3:hover {

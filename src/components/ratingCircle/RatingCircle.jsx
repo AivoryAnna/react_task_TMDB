@@ -17,7 +17,7 @@ const RatingCircle = ({ value }) => {
     return (
         <div className="rating-circle">
 
-            <svg height="35" width="35">
+            <svg height="35" width="35" style={{ transform: 'rotate(-90deg)' }}>
                 <circle
                     stroke="#666666"
                     fill="transparent"

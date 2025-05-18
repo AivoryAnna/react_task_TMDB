@@ -1,25 +1,21 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
 /**
- * @param {Function|null} onVisible
- * @param {Object} options
- * @param {boolean} options.enabled 
- * @param {number} options.threshold 
- * @param {boolean} options.once 
- * @returns {[React.RefObject, boolean]}
+ * @param {Function|null} onVisible // when the element becomes visible
+ * @param {Object} options 
+ * @param {boolean} options.enabled // if the observer is enabled
+ * @param {number} options.threshold // the percentage of visibility required to trigger the callback
+ * @param {boolean} options.once // if the callback should be triggered only once
+ * @returns {[React.RefObject, boolean]} // a ref to the observed element and its visibility status
  */
 
 
-export default function useVisibilityObserver(
-  onVisible,
-  { enabled = true, threshold = 1.0, once = false } = {}
-) {
-  const ref = useRef(null);
-  const observerRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
+export default function useVisibilityObserver( onVisible, { enabled = true, threshold = 1.0, once = false } = {}) {
+  const ref = useRef(null); // I create a ref to attach to the element we want to observe
+  const observerRef = useRef(null); // I create a ref to store the IntersectionObserver instance
+  const [isVisible, setIsVisible] = useState(false); // I create a state to track the visibility of the element
 
-  const callback = useCallback(
-    (entries) => {
+  const callback = useCallback((entries) => {
       const entry = entries[0];
       const isIntersecting = entry.isIntersecting;
       setIsVisible(isIntersecting);

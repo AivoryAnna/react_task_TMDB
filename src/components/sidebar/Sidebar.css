@@ -30,6 +30,18 @@
     color: var(--main-color);
   }
 
+  .just-unselected:hover {
+    background: var(--main-color);
+    color: var(--text-color);
+  }
+
+  .just-unselected-noId {
+    background-color: var(--accent-color);
+    color: var(--main-color);
+  }
+
+
+
   .search-button  {
     font-size: 1.1rem;
     padding: 0.7rem 1rem;
